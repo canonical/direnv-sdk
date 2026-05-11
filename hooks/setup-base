@@ -1,0 +1,25 @@
+cat <<EOF >/etc/profile.d/direnv.sh
+export PATH="${SDK}/bin:\$PATH"
+EOF
+
+# Sentinel-guarded system-wide shell hooks for bash + zsh.
+# The markers make the injection idempotent across refreshes.
+MARKER="# >>> direnv-sdk shell hook >>>"
+END="# <<< direnv-sdk shell hook <<<"
+
+inject() {
+  local file="$1" snippet="$2"
+  [ -f "$file" ] || return 0
+  grep -qF "$MARKER" "$file" && return 0
+  printf '\n%s\n%s\n%s\n' "$MARKER" "$snippet" "$END" >> "$file"
+}
+
+inject /etc/bash.bashrc 'eval "$(direnv hook bash)"'
+inject /etc/zsh/zshrc   'eval "$(direnv hook zsh)"'
+
+# Fish: vendor_conf.d drop-in is sourced on every fish startup. Placing it
+# proactively means it works even when fish is installed after this hook ran.
+mkdir -p /usr/share/fish/vendor_conf.d
+cat <<'EOF' >/usr/share/fish/vendor_conf.d/direnv.fish
+direnv hook fish | source
+EOF

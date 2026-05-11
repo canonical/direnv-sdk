@@ -9,23 +9,29 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^VERSION$/"],
+      "managerFilePatterns": [
+        "/^VERSION$/"
+      ],
       "matchStrings": [
         "(?<currentValue>[0-9.]+)"
       ],
-      "depNameTemplate": "TODO_DEP_NAME",
-      "datasourceTemplate": "TODO_DATASOURCE",
-      "versioningTemplate": "semver"
+      "depNameTemplate": "direnv/direnv",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
     }
   ],
   "baseBranchPatterns": [
-    "TODO_BRANCH"
+    "latest"
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["TODO_DEP_NAME"],
-      "matchBaseBranches": ["TODO_BRANCH"],
-      "allowedVersions": "/^TODO_VERSION_PREFIX\\./"
+      "matchPackageNames": [
+        "direnv/direnv"
+      ],
+      "matchBaseBranches": [
+        "latest"
+      ]
     }
   ]
 }
