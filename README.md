@@ -91,10 +91,18 @@ export OPENAI_API_KEY=...
 
 - Interface: `mount`
 - Workshop target: `/home/workshop/.config/direnv`
-- Purpose: Preserves direnv's allowlist (`allowed.txt`, plus the per-`.envrc`
-  hashes it records on `direnv allow`) between workshop updates. Without
-  this mount, every refresh would force the user to re-approve their
-  `.envrc` files.
+- Purpose: Preserves direnv's user configuration between workshop updates.
+  This is where direnv looks for `direnvrc` (extensions to the direnv
+  stdlib) and `direnv.toml`.
+
+### `direnv-state`
+
+- Interface: `mount`
+- Workshop target: `/home/workshop/.local/share/direnv`
+- Purpose: Preserves direnv's allowlist between workshop updates. direnv
+  stores the per-`.envrc` approval hashes under `allow/` here; without this
+  mount, every refresh would force the user to re-approve their `.envrc`
+  files.
 
 ## Slots (resources this SDK provides)
 

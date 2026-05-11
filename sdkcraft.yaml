@@ -18,6 +18,9 @@ plugs:
   direnv-config:
     interface: mount
     workshop-target: /home/workshop/.config/direnv
+  direnv-state:
+    interface: mount
+    workshop-target: /home/workshop/.local/share/direnv
 
 parts:
   direnv:

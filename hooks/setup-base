@@ -14,7 +14,12 @@ inject() {
   printf '\n%s\n%s\n%s\n' "$MARKER" "$snippet" "$END" >> "$file"
 }
 
+# Snippets below are passed literally into rc files; expansion happens later
+# when the rc file is sourced by a shell. shellcheck disable=SC2016 covers
+# each call individually since the directive only spans the next command.
+# shellcheck disable=SC2016
 inject /etc/bash.bashrc 'eval "$(direnv hook bash)"'
+# shellcheck disable=SC2016
 inject /etc/zsh/zshrc   'eval "$(direnv hook zsh)"'
 
 # Fish: vendor_conf.d drop-in is sourced on every fish startup. Placing it
