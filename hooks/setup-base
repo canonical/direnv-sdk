@@ -2,14 +2,7 @@ cat <<EOF >/etc/profile.d/direnv.sh
 export PATH="${SDK}/bin:\$PATH"
 EOF
 
-# Bash hook: /etc/bash.bashrc always exists on the Ubuntu base, so we can
-# inject system-wide. The sentinel keeps the injection idempotent across
-# SDK refreshes.
-MARKER="# >>> direnv-sdk shell hook >>>"
-END="# <<< direnv-sdk shell hook <<<"
+cat <<'EOF' >>/etc/bash.bashrc
 
-if [ -f /etc/bash.bashrc ] && ! grep -qF "$MARKER" /etc/bash.bashrc; then
-    # shellcheck disable=SC2016
-    printf '\n%s\n%s\n%s\n' "$MARKER" 'eval "$(direnv hook bash)"' "$END" \
-        >> /etc/bash.bashrc
-fi
+eval "$(direnv hook bash)"
+EOF
