@@ -2,29 +2,14 @@ cat <<EOF >/etc/profile.d/direnv.sh
 export PATH="${SDK}/bin:\$PATH"
 EOF
 
-# Sentinel-guarded system-wide shell hooks for bash + zsh.
-# The markers make the injection idempotent across refreshes.
+# Bash hook: /etc/bash.bashrc always exists on the Ubuntu base, so we can
+# inject system-wide. The sentinel keeps the injection idempotent across
+# SDK refreshes.
 MARKER="# >>> direnv-sdk shell hook >>>"
 END="# <<< direnv-sdk shell hook <<<"
 
-inject() {
-  local file="$1" snippet="$2"
-  [ -f "$file" ] || return 0
-  grep -qF "$MARKER" "$file" && return 0
-  printf '\n%s\n%s\n%s\n' "$MARKER" "$snippet" "$END" >> "$file"
-}
-
-# Snippets below are passed literally into rc files; expansion happens later
-# when the rc file is sourced by a shell. shellcheck disable=SC2016 covers
-# each call individually since the directive only spans the next command.
-# shellcheck disable=SC2016
-inject /etc/bash.bashrc 'eval "$(direnv hook bash)"'
-# shellcheck disable=SC2016
-inject /etc/zsh/zshrc   'eval "$(direnv hook zsh)"'
-
-# Fish: vendor_conf.d drop-in is sourced on every fish startup. Placing it
-# proactively means it works even when fish is installed after this hook ran.
-mkdir -p /usr/share/fish/vendor_conf.d
-cat <<'EOF' >/usr/share/fish/vendor_conf.d/direnv.fish
-direnv hook fish | source
-EOF
+if [ -f /etc/bash.bashrc ] && ! grep -qF "$MARKER" /etc/bash.bashrc; then
+    # shellcheck disable=SC2016
+    printf '\n%s\n%s\n%s\n' "$MARKER" 'eval "$(direnv hook bash)"' "$END" \
+        >> /etc/bash.bashrc
+fi

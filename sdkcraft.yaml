@@ -4,10 +4,10 @@ adopt-info: direnv
 summary: Load .envrc-driven environment variables in workshop sessions
 description: |
   This SDK provides direnv inside a workshop. It installs the upstream binary
-  and wires the bash, zsh, and fish shell hooks system-wide. On project setup
-  it auto-allows /project/.envrc, so the project's environment loads on every
-  new shell. The direnv configuration directory is persisted between workshop
-  updates.
+  and wires the bash hook system-wide. On project setup it auto-allows
+  /project/.envrc, so the project's environment loads on every new shell.
+  The direnv configuration and allowlist directories are persisted between
+  workshop updates.
 license: MIT
 build-base: ubuntu@24.04
 platforms:
