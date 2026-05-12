@@ -1,10 +1,10 @@
 if [[ ! -f "${SDK}/bin/direnv" ]]; then
-  workshopctl set-health --code="direnv-not-installed" error "direnv not installed."
+  workshopctl set-health --code="direnvrc-not-installed" error "direnv not installed."
   exit 0
 fi
 
 if ! sudo -u workshop --login which direnv >/dev/null 2>&1; then
-  workshopctl set-health --code="direnv-not-on-path" error "direnv not available on the \$PATH."
+  workshopctl set-health --code="direnvrc-not-on-path" error "direnv not available on the \$PATH."
   exit 0
 fi
 
