@@ -66,6 +66,10 @@ hashes the file on `allow` and re-prompts on changes), run:
 direnv allow
 ```
 
+Non-interactive `workshop exec` and `workshop run` don't draw a prompt, so
+the bash hook never fires. Use `direnv exec /project -- <cmd>` to load the
+`.envrc` and run the command in that environment.
+
 ### Use direnv to manage secrets for other SDKs
 
 direnv is a convenient place to set environment variables consumed by other
