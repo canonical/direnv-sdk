@@ -1,0 +1,8 @@
+cat <<EOF >/etc/profile.d/direnv.sh
+export PATH="${SDK}/bin:\$PATH"
+EOF
+
+cat <<'EOF' >>/etc/bash.bashrc
+
+eval "$(direnv hook bash)"
+EOF

@@ -1,0 +1,11 @@
+mkdir -p "$HOME/.config/direnv" "$HOME/.local/share/direnv"
+
+# Auto-allow the project's .envrc if present. The workshop user already
+# trusted /project by mounting it, so this avoids an extra `direnv allow`
+# step on every fresh shell. If no .envrc exists, this is a no-op.
+#
+# Use the full path to the SDK binary — hooks do not get /etc/profile.d
+# sourced, so $PATH does not include ${SDK}/bin here.
+if [ -f /project/.envrc ]; then
+    "${SDK}/bin/direnv" allow /project
+fi

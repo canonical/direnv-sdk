@@ -1,0 +1,62 @@
+name: direnv
+title: direnv SDK
+adopt-info: direnv
+summary: Load .envrc-driven environment variables in workshop sessions
+description: |
+  This SDK provides direnv inside a workshop. It installs the upstream binary
+  and wires the bash hook system-wide. On project setup it auto-allows
+  /project/.envrc, so the project's environment loads on every new shell.
+  The direnv configuration and allowlist directories are persisted between
+  workshop updates.
+license: MIT
+build-base: ubuntu@24.04
+platforms:
+  amd64:
+  arm64:
+
+plugs:
+  direnv-config:
+    interface: mount
+    workshop-target: /home/workshop/.config/direnv
+  direnv-state:
+    interface: mount
+    workshop-target: /home/workshop/.local/share/direnv
+
+parts:
+  direnv:
+    plugin: nil
+    build-packages:
+      - curl
+      - ca-certificates
+    override-pull: |
+      VERSION="$(cat "$CRAFT_PROJECT_DIR/VERSION")"
+      craftctl set version="$VERSION"
+
+      case "${CRAFT_ARCH_BUILD_FOR}" in
+        amd64) PLATFORM=linux-amd64 ;;
+        arm64) PLATFORM=linux-arm64 ;;
+        *) echo "Unsupported arch: ${CRAFT_ARCH_BUILD_FOR}" >&2; exit 1 ;;
+      esac
+      ASSET="direnv.${PLATFORM}"
+      DOWNLOAD_URL="https://github.com/direnv/direnv/releases/download/v${VERSION}/${ASSET}"
+
+      CHECKSUM="$(awk -v key="$ASSET" '$2 == key {print $1}' "$CRAFT_PROJECT_DIR/CHECKSUMS")"
+      if ! echo "$CHECKSUM" | grep -qE '^[a-f0-9]{64}$'; then
+        echo "Invalid or missing checksum for ${ASSET} in CHECKSUMS" >&2
+        exit 1
+      fi
+
+      echo "Downloading ${DOWNLOAD_URL}..."
+      curl -fsSL -o "$CRAFT_PART_SRC/direnv" "${DOWNLOAD_URL}"
+
+      ACTUAL="$(sha256sum "$CRAFT_PART_SRC/direnv" | cut -d' ' -f1)"
+      if [ "$ACTUAL" != "$CHECKSUM" ]; then
+        echo "Checksum mismatch!" >&2
+        echo "  expected: $CHECKSUM" >&2
+        echo "  actual:   $ACTUAL" >&2
+        rm -f "$CRAFT_PART_SRC/direnv"
+        exit 1
+      fi
+      echo "Checksum OK."
+    override-build: |
+      install -Dm755 "$CRAFT_PART_SRC/direnv" "$CRAFT_PART_INSTALL/bin/direnv"
