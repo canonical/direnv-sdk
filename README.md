@@ -32,9 +32,8 @@ exports load automatically on `workshop shell`.
 ### Prerequisites, project layout
 
 1. No prerequisite SDKs are required.
-2. Put your project files in your project directory (mounted at `/project/`
-   inside the workshop). To use the SDK, add an `.envrc` file at
-   `/project/.envrc` with the exports you want active in every shell:
+2. Add an `.envrc` file at `/project/.envrc` with the exports you want active
+   in every shell:
 
    ```bash
    # /project/.envrc
@@ -44,7 +43,7 @@ exports load automatically on `workshop shell`.
    ```
 
 3. On launch, the SDK adds direnv to `PATH`, injects the bash hook into
-   `/etc/bash.bashrc`, and — if `/project/.envrc` exists — calls
+   `/etc/bash.bashrc`, and (when `/project/.envrc` exists) calls
    `direnv allow /project` so the hook is trusted without manual approval.
 
 ### Start a session
@@ -73,7 +72,7 @@ the bash hook never fires. Use `direnv exec /project -- <cmd>` to load the
 ### Use direnv to manage secrets for other SDKs
 
 direnv is a convenient place to set environment variables consumed by other
-workshop SDKs — for example API tokens for agentic SDKs like
+workshop SDKs, for example API tokens for agentic SDKs like
 [claude-code](https://github.com/canonical/claude-code-sdk),
 [codex](https://github.com/canonical/codex-sdk),
 [copilot](https://github.com/canonical/copilot-sdk), or
