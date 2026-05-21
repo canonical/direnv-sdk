@@ -117,7 +117,7 @@ This SDK doesn't define any slots.
 
 - [direnv official documentation](https://direnv.net/)
 - [direnv stdlib reference](https://direnv.net/man/direnv-stdlib.1.html)
-- [Workshop documentation](https://canonical-workshop.readthedocs-hosted.com/latest/)
+- [Workshop documentation](https://ubuntu.com/workshop/docs/)
 
 ---
 
@@ -125,7 +125,7 @@ This SDK doesn't define any slots.
 
 - direnv project: [direnv on GitHub](https://github.com/direnv/direnv)
 - Workshop forum:
-  [Workshop Discourse](https://discourse.canonical.com/c/engineering/workshops/34)
+  [Discourse](https://discourse.ubuntu.com/)
 - Please review our
   [Code of Conduct](https://ubuntu.com/community/ethos/code-of-conduct)
   before participating.
