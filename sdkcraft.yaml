@@ -1,6 +1,6 @@
-name: direnvrc
-title: direnvrc SDK
-adopt-info: direnvrc
+name: direnv
+title: direnv SDK
+adopt-info: direnv
 summary: Load .envrc-driven environment variables in workshop sessions
 description: |
   This SDK provides direnv inside a workshop. It installs the upstream binary
@@ -15,15 +15,15 @@ platforms:
   arm64:
 
 plugs:
-  direnvrc-config:
+  direnv-config:
     interface: mount
     workshop-target: /home/workshop/.config/direnv
-  direnvrc-state:
+  direnv-state:
     interface: mount
     workshop-target: /home/workshop/.local/share/direnv
 
 parts:
-  direnvrc:
+  direnv:
     plugin: nil
     build-packages:
       - curl

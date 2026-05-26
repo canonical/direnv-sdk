@@ -1,4 +1,4 @@
-# direnvrc SDK for Workshop
+# direnv SDK for Workshop
 
 This SDK provides [direnv](https://direnv.net/) inside a workshop. It installs
 the upstream binary and wires the bash shell hook system-wide. On project
@@ -17,7 +17,7 @@ A minimal workshop:
 name: my-project
 base: ubuntu@24.04
 sdks:
-  - name: direnvrc
+  - name: direnv
     channel: latest/stable
 ```
 
@@ -90,15 +90,15 @@ export OPENAI_API_KEY=...
 
 ## Plugs (resources this SDK consumes)
 
-### `direnvrc-config`
+### `direnv-config`
 
 - Interface: `mount`
 - Workshop target: `/home/workshop/.config/direnv`
 - Purpose: Preserves direnv's user configuration between workshop updates.
-  This is where direnv looks for `direnvrc` (extensions to the direnv
-  stdlib) and `direnv.toml`.
+  This is where direnv looks for user extensions to the direnv stdlib and
+  `direnv.toml`.
 
-### `direnvrc-state`
+### `direnv-state`
 
 - Interface: `mount`
 - Workshop target: `/home/workshop/.local/share/direnv`
