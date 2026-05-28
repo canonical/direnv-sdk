@@ -9,7 +9,7 @@ description: |
   The direnv configuration and allowlist directories are persisted between
   workshop updates.
 license: MIT
-build-base: ubuntu@24.04
+build-base: ubuntu@26.04
 platforms:
   amd64:
   arm64:
