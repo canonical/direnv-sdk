@@ -1,0 +1,19 @@
+summary: setup-base configures the direnv bash hook and state directories
+
+prepare: |
+  envsubst '${BASE}' <workshop.yaml.in >workshop.yaml
+  workshop launch
+
+restore: |
+  workshop remove || true
+
+execute: |
+  workshop exec -- test -s /etc/profile.d/direnv.sh
+  workshop exec -- grep -F 'direnv hook bash' /etc/bash.bashrc
+  workshop exec -- test -d /home/workshop/.config/direnv
+  workshop exec -- test -d /home/workshop/.local/share/direnv
+
+debug: |
+  workshop exec -- bash -lc 'cat /etc/profile.d/direnv.sh' || true
+  workshop exec -- bash -lc 'tail -20 /etc/bash.bashrc' || true
+  workshop exec -- bash -lc 'ls -ld /home/workshop/.config/direnv /home/workshop/.local/share/direnv' || true

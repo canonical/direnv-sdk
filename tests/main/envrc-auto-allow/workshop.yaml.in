@@ -1,0 +1,4 @@
+name: test-direnv
+base: ${BASE}
+sdks:
+  - name: try-direnv
