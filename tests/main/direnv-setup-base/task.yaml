@@ -14,6 +14,6 @@ execute: |
   workshop exec -- test -d /home/workshop/.local/share/direnv
 
 debug: |
-  workshop exec -- bash -lc 'cat /etc/profile.d/direnv.sh' || true
-  workshop exec -- bash -lc 'tail -20 /etc/bash.bashrc' || true
-  workshop exec -- bash -lc 'ls -ld /home/workshop/.config/direnv /home/workshop/.local/share/direnv' || true
+  workshop exec -- cat /etc/profile.d/direnv.sh || true
+  workshop exec -- tail -20 /etc/bash.bashrc || true
+  workshop exec -- ls -ld /home/workshop/.config/direnv /home/workshop/.local/share/direnv || true

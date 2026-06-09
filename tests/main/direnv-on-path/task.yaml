@@ -10,9 +10,9 @@ restore: |
 execute: |
   # `workshop exec` runs as the `workshop` user with a login shell,
   # which is what setup-base configures via /etc/profile.d/direnv.sh.
-  workshop exec -- bash -lc 'command -v direnv' | MATCH "/direnv$"
+  workshop exec -- which direnv | MATCH "/direnv$"
 
 debug: |
-  workshop exec -- bash -lc 'echo PATH=$PATH' || true
-  workshop exec -- bash -lc 'ls -l /etc/profile.d/direnv.sh' || true
-  workshop exec -- bash -lc 'cat /etc/profile.d/direnv.sh' || true
+  workshop exec -- printenv PATH || true
+  workshop exec -- ls -l /etc/profile.d/direnv.sh || true
+  workshop exec -- cat /etc/profile.d/direnv.sh || true
