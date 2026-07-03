@@ -1,7 +1,8 @@
-name: direnvrc
-title: direnvrc SDK
-adopt-info: direnvrc
+name: direnv
+title: direnv SDK
+adopt-info: direnv
 summary: Load .envrc-driven environment variables in workshop sessions
+website: https://github.com/canonical/direnv-sdk
 description: |
   This SDK provides direnv inside a workshop. It installs the upstream binary
   and wires the bash hook system-wide. On project setup it auto-allows
@@ -9,21 +10,21 @@ description: |
   The direnv configuration and allowlist directories are persisted between
   workshop updates.
 license: MIT
-build-base: ubuntu@24.04
+build-base: ubuntu@26.04
 platforms:
   amd64:
   arm64:
 
 plugs:
-  direnvrc-config:
+  direnv-config:
     interface: mount
     workshop-target: /home/workshop/.config/direnv
-  direnvrc-state:
+  direnv-state:
     interface: mount
     workshop-target: /home/workshop/.local/share/direnv
 
 parts:
-  direnvrc:
+  direnv:
     plugin: nil
     build-packages:
       - curl

@@ -1,0 +1,18 @@
+summary: direnv is on $PATH inside the workshop
+
+prepare: |
+  envsubst '${BASE}' <workshop.yaml.in >workshop.yaml
+  workshop launch
+
+restore: |
+  workshop remove || true
+
+execute: |
+  # `workshop exec` runs as the `workshop` user with a login shell,
+  # which is what setup-base configures via /etc/profile.d/direnv.sh.
+  workshop exec -- which direnv | MATCH "/direnv$"
+
+debug: |
+  workshop exec -- printenv PATH || true
+  workshop exec -- ls -l /etc/profile.d/direnv.sh || true
+  workshop exec -- cat /etc/profile.d/direnv.sh || true

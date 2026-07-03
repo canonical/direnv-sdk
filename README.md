@@ -1,4 +1,4 @@
-# direnvrc SDK for Workshop
+# direnv SDK for Workshop
 
 This SDK provides [direnv](https://direnv.net/) inside a workshop. It installs
 the upstream binary and wires the bash shell hook system-wide. On project
@@ -17,7 +17,7 @@ A minimal workshop:
 name: my-project
 base: ubuntu@24.04
 sdks:
-  - name: direnvrc
+  - name: direnv
     channel: latest/stable
 ```
 
@@ -90,15 +90,15 @@ export OPENAI_API_KEY=...
 
 ## Plugs (resources this SDK consumes)
 
-### `direnvrc-config`
+### `direnv-config`
 
 - Interface: `mount`
 - Workshop target: `/home/workshop/.config/direnv`
 - Purpose: Preserves direnv's user configuration between workshop updates.
-  This is where direnv looks for `direnvrc` (extensions to the direnv
-  stdlib) and `direnv.toml`.
+  This is where direnv looks for user extensions to the direnv stdlib and
+  `direnv.toml`.
 
-### `direnvrc-state`
+### `direnv-state`
 
 - Interface: `mount`
 - Workshop target: `/home/workshop/.local/share/direnv`
@@ -117,7 +117,7 @@ This SDK doesn't define any slots.
 
 - [direnv official documentation](https://direnv.net/)
 - [direnv stdlib reference](https://direnv.net/man/direnv-stdlib.1.html)
-- [Workshop documentation](https://canonical-workshop.readthedocs-hosted.com/latest/)
+- [Workshop documentation](https://ubuntu.com/workshop/docs/)
 
 ---
 
@@ -125,7 +125,7 @@ This SDK doesn't define any slots.
 
 - direnv project: [direnv on GitHub](https://github.com/direnv/direnv)
 - Workshop forum:
-  [Workshop Discourse](https://discourse.canonical.com/c/engineering/workshops/34)
+  [Discourse](https://discourse.ubuntu.com/)
 - Please review our
   [Code of Conduct](https://ubuntu.com/community/ethos/code-of-conduct)
   before participating.
