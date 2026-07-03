@@ -1,0 +1,26 @@
+summary: setup-project auto-allows /project/.envrc for direnv
+
+prepare: |
+  cat >.envrc <<EOF
+  export DIRENV_SPREAD_VALUE=loaded
+  export DIRENV_SPREAD_BASE="${BASE}"
+  EOF
+  envsubst '${BASE}' <workshop.yaml.in >workshop.yaml
+  workshop launch
+
+restore: |
+  workshop remove || true
+  rm -f .envrc
+
+execute: |
+  # setup-project runs `direnv allow /project` when .envrc exists, so a
+  # non-interactive `direnv exec` should be able to load the environment
+  # without requiring manual approval.
+  workshop exec -- direnv exec /project printenv DIRENV_SPREAD_VALUE | MATCH "^loaded$"
+  workshop exec -- direnv exec /project printenv DIRENV_SPREAD_BASE | MATCH "^${BASE}$"
+  workshop exec -- test -d /home/workshop/.local/share/direnv/allow
+
+debug: |
+  workshop exec -- cat /project/.envrc || true
+  workshop exec -- direnv status || true
+  workshop exec -- find /home/workshop/.local/share/direnv -maxdepth 3 -type f -print || true
