@@ -21,6 +21,8 @@
       "extractVersionTemplate": "^v?(?<version>.+)$"
     }
   ],
+  "automerge": true,
+  "platformAutomerge": true,
   "baseBranchPatterns": [
     "latest"
   ],
